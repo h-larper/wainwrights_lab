@@ -1,14 +1,15 @@
 const list = document.querySelector("#wainwrights-list");
+let wainwrightData;
 
 const getAllWainwrights = async () => {
     const response = await fetch("https://raw.githubusercontent.com/annahndr/annahndr.github.io/master/wainwrights_data/wainwrights.json")
-    const jsonData = await response.json();
-    accessAPIForWainwrightInfo(jsonData);
+    wainwrightData = await response.json();
+    accessAPIForWainwrightInfo(wainwrightData);
 }
 
 
-const accessAPIForWainwrightInfo = (jsonData) => {
-    jsonData.forEach((response) => {
+const accessAPIForWainwrightInfo = (wainwrightData) => {
+    wainwrightData.forEach((response) => {
         const wainwrightName = document.createElement("li");
         wainwrightName.innerText = response.name;
         list.appendChild(wainwrightName);
@@ -31,19 +32,31 @@ const accessAPIForWainwrightInfo = (jsonData) => {
     });
 }
 
+getAllWainwrights();
 
 const button = document.querySelector("button");
 button.addEventListener("click", () => {
     getAllWainwrights();
 })
 
+
 //FORM CODE:
 const wainwrightForm = document.querySelector("#wainwright-picker");
+const returned = document.querySelector("#returnedNames");
 
 wainwrightForm.addEventListener("submit", (evt) =>  {
     evt.preventDefault();
-    console.log(evt.target["wainwright-name"].value);
-})
+    const newInput = evt.target["wainwright-name"].value;
+    // console.log(newInput);
+    const returnedNames = wainwrightData.filter(wainright => {
+        return wainright.name.toLowerCase().includes(newInput.toLowerCase());
+    });
+    console.log(returnedNames);
+    const displayReturnedNames = document.createElement("p");
+    displayReturnedNames.innerText = returnedNames;
+    console.log(displayReturnedNames);
+    // returned.appendChild(displayReturnedNames);
+});
 
 
 
