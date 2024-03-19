@@ -40,7 +40,7 @@ button.addEventListener("click", () => {
 //FORM CODE:
 const wainwrightForm = document.querySelector("#wainwright-picker");
 
-wainwrightForm.addEventListener("submit", (evt) => {
+wainwrightForm.addEventListener("submit", (evt) =>  {
     evt.preventDefault();
     console.log(evt.target["wainwright-name"].value);
 })
